@@ -357,7 +357,7 @@ transactions.filter(transaction => {
 
 })
 mostItems = Math.max(...itemList) 
-console.log( 'The most items sold in a single transaction is:', mostItems );
+// console.log( 'The most items sold in a single transaction is:', mostItems );
 
 
 // // // --------------------------------------------------
@@ -366,6 +366,21 @@ console.log( 'The most items sold in a single transaction is:', mostItems );
 // // /*
 // //   Calculate the sum of the 'purchase' with the fewest items.
 // // */
-// // const sumOfSmallestPurchase;
+let sumOfSmallestPurchase = [] 
+const purchasesSmall = transactions.filter(transaction => transaction.type == 'purchase')
+const itemsForSmall = [] 
 
-// // console.log( 'The sum of the smallest purchase is:', sumOfSmallestPurchase );
+
+  purchasesSmall.filter(purchase => { 
+    itemsForSmall.push(purchase.items.length)
+    if (purchase.items.length == 2){ 
+      purchase.items.filter(item => { 
+        sumOfSmallestPurchase.push(item.price) 
+      })
+    }
+  })
+  sumOfSmallestPurchase = sumOfSmallestPurchase.reduce(add)
+  // Math.min(...itemsForSmall)
+  // console.log(itemsForSmall)
+
+console.log( 'The sum of the smallest purchase is:', sumOfSmallestPurchase );
