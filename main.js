@@ -291,9 +291,20 @@ console.log( 'The sum of the first sale items is:', sumFirstSale );
 //   - Make sure to include 'price' information from *all* purchases.
 // */
 
-// const sumPurchases;
 
-// console.log( 'The sum of all purchases is:', sumPurchases );
+const purchases = transactions.filter(transaction => transaction.type == 'purchase')
+let sumPurchases = [];
+purchases.filter(transaction => { 
+  transaction.items.forEach(item => { 
+    sumPurchases.push(item.price)
+    // console.log(sumPurchases);
+  })
+
+})
+
+sumPurchases = sumPurchases.reduce(add) 
+sumPurchases = Math.round(sumPurchases * 100) / 100
+console.log( 'The sum of all purchases is:', sumPurchases );
 
 
 // // --------------------------------------------------
