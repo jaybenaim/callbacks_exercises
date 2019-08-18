@@ -130,7 +130,7 @@ const transactions = [
   HINT(S):
   - Not all transactions are 'sales'.
 // */
-// const numSales = transactions.filter(transaction => transaction.type == 'sale').length 
+const numSales = transactions.filter(transaction => transaction.type == 'sale').length 
 
 
 // /*
@@ -161,7 +161,7 @@ const transactions = [
 // /*
 //   Calculate the total number of 'purchases'.
 // // */
-// const numPurchases = transactions.filter(transaction => transaction.type == 'purchase').length
+const numPurchases = transactions.filter(transaction => transaction.type == 'purchase').length
 
 // console.log( 'The total number of purchases is:', numPurchases );
 
@@ -175,7 +175,7 @@ const transactions = [
 //   HINT(S):
 //   - Don't forget that 'purchases' can also be made in 'cash'!
 // */
-// const numCashSales = transactions.filter(transaction => transaction.paymentMethod == 'cash').length
+const numCashSales = transactions.filter(transaction => transaction.paymentMethod == 'cash').length
 
 // console.log( 'The total number of cash sales is:', numCashSales );
 
@@ -189,7 +189,7 @@ const transactions = [
 //   HINT(S):
 //   - Make sure to exclude any 'sales' made by 'credit'!
 // // */
-// const numCreditPurchases = transactions.filter(transaction => transaction.paymentMethod == 'credit').length
+const numCreditPurchases = transactions.filter(transaction => transaction.paymentMethod == 'credit').length
 
 // console.log( 'The total number of credit purchases is:', numCreditPurchases );
 
@@ -207,10 +207,10 @@ const transactions = [
 //   - This array is allowed to contain duplicate values.
 // */
 
-// const allVendors = []
-// const vendor = transactions.forEach(transaction => {
-//   transaction.vendor != null ? allVendors.push(transaction.vendor): 'none'; 
-// });
+const allVendors = []
+const vendor = transactions.forEach(transaction => {
+  transaction.vendor != null ? allVendors.push(transaction.vendor): 'none'; 
+});
 // console.log( 'The vendors are:', allVendors );
 
 
@@ -226,7 +226,7 @@ const transactions = [
 //   - The assembled array should be made up of strings, not full `transaction` objects.
 //   - Make sure that the resulting array *does not* include any duplicates.
 // */
-// const uniqueCustomers = transactions.map(transaction => transaction.customer != null ? transaction.customer: null )
+const uniqueCustomers = transactions.map(transaction => transaction.customer != null ? transaction.customer: null )
 
 // console.log( 'The unique customers are:', uniqueCustomers );
 
@@ -244,16 +244,16 @@ const transactions = [
 //   - There may be more than 1 'sale' that includes 5 or more items.
 //   - Individual transactions do not have either `name` or `numItems` properties, we'll have to add them to the output.
 // */
-// const bigSpenders = []; 
+const bigSpenders = []; 
 saleSpenders = transactions.filter(transaction => transaction.type == 'sale')
-// customers = saleSpenders.filter(transaction => {
-//   if (transaction.customer != null){ 
-//     if (transaction.items.length >= 5){ 
-//       bigSpender = {'Customer Name': transaction.customer, 'numItems': transaction.items.length}
-//       bigSpenders.push(bigSpender); 
-//     } 
-//   }
-//  })
+customers = saleSpenders.filter(transaction => {
+  if (transaction.customer != null){ 
+    if (transaction.items.length >= 5){ 
+      bigSpender = {'Customer Name': transaction.customer, 'numItems': transaction.items.length}
+      bigSpenders.push(bigSpender); 
+    } 
+  }
+ })
 
 // console.log( 'The "big spenders" are:', bigSpenders );
 
@@ -271,13 +271,11 @@ const add = (total, num) => {
   return total += num; 
 }
 let sumFirstSale = []
-
 transactions[Object.keys(transactions)[0]].items.filter(item => { 
   sumFirstSale.push(item.price)
 })
 sumFirstSale = sumFirstSale.reduce(add)
-console.log( 'The sum of the first sale items is:', sumFirstSale );
-
+// console.log( 'The sum of the first sale items is:', sumFirstSale );
 
 // // // --------------------------------------------------
 // // // QUESTION 09
@@ -291,17 +289,17 @@ console.log( 'The sum of the first sale items is:', sumFirstSale );
 // // */
 
 
-// const purchases = transactions.filter(transaction => transaction.type == 'purchase')
-// let sumPurchases = [];
-// purchases.filter(transaction => { 
-//   transaction.items.forEach(item => { 
-//     sumPurchases.push(item.price)
-//     // console.log(sumPurchases);
-//   })
+const purchases = transactions.filter(transaction => transaction.type == 'purchase')
+let sumPurchases = [];
+purchases.filter(transaction => { 
+  transaction.items.forEach(item => { 
+    sumPurchases.push(item.price)
+    // console.log(sumPurchases);
+  })
 
-// })
-// sumPurchases = sumPurchases.reduce(add) 
-// sumPurchases = Math.round(sumPurchases * 100) / 100
+})
+sumPurchases = sumPurchases.reduce(add) 
+sumPurchases = Math.round(sumPurchases * 100) / 100
 // console.log( 'The sum of all purchases is:', sumPurchases );
 
 
@@ -318,30 +316,28 @@ console.log( 'The sum of the first sale items is:', sumFirstSale );
 // //   HINT(S):
 // //   - Unlike 'QUESTION 08' and 'QUESTION 09', here we're interested in both 'sale' and 'purchase' transactions.
 // // */
-// let netProfit = [] 
-// netProfit.push(sumFirstSale)
-// netProfit.push(sumPurchases)
+let netProfit = [] 
+let totalSales = []
+let totalPurchases = []
 
-// saleSpenders.filter(item => { 
-//   console.log(item.items)
-// })
-// console.log( 'The net profit is:', netProfit );
+const purchaseType = transactions.filter(transaction => transaction.type == 'sale')
+purchaseType.filter(purchase => { 
+purchase.items.filter(p => { 
+  totalSales.push(p.price)
+})
+})
+totalSales.push(sumFirstSale)
+totalSales = totalSales.reduce(add)
+totalPurchases.push(sumPurchases)
+netProfit.push(totalSales)
+netProfit.push(totalPurchases)
+const profit = (total, num) => { 
+  return Number(total) + Number(num)
+}
+netProfit = netProfit.reduce(profit)
 
-/// SALES TOTAL 
+console.log( 'The net profit is:', netProfit );
 
-// const add = (total, num) => { 
-//   return total += num; 
-// }
-// let sumFirstSale = []
-// saleSpenders.filter(item => {
-//   // console.log(item.items)
-//   // sumFirstSale.push(item.items[0].price)
-//   item.items.filter(i => { 
-//     sumFirstSale.push(i.price)
-    
-//   })
-// })
-// console.log(sumFirstSale.reduce(add))
 
 // // // --------------------------------------------------
 // // // QUESTION 11
