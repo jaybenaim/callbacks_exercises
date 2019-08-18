@@ -336,7 +336,7 @@ const profit = (total, num) => {
 }
 netProfit = netProfit.reduce(profit)
 
-console.log( 'The net profit is:', netProfit );
+// console.log( 'The net profit is:', netProfit );
 
 
 // // // --------------------------------------------------
@@ -348,9 +348,16 @@ console.log( 'The net profit is:', netProfit );
 // //   HINTS:
 // //   - The result of this calculation should be a number (not an array, object, or other data type).
 // // */
-// // const mostItems;
+let mostItems = 0 
+const itemList = [] 
 
-// // console.log( 'The most items sold in a single transaction is:', mostItems );
+transactions.filter(transaction => { 
+  const items = transaction.items.length
+  itemList.push(items) 
+
+})
+mostItems = Math.max(...itemList) 
+console.log( 'The most items sold in a single transaction is:', mostItems );
 
 
 // // // --------------------------------------------------
