@@ -226,9 +226,9 @@ console.log( 'The vendors are:', allVendors );
   - The assembled array should be made up of strings, not full `transaction` objects.
   - Make sure that the resulting array *does not* include any duplicates.
 */
-// const uniqueCustomers;
+const uniqueCustomers = transactions.map(transaction => transaction.customer != null ? transaction.customer: null )
 
-// console.log( 'The unique customers are:', uniqueCustomers );
+console.log( 'The unique customers are:', uniqueCustomers );
 
 
 // --------------------------------------------------
@@ -244,9 +244,18 @@ console.log( 'The vendors are:', allVendors );
   - There may be more than 1 'sale' that includes 5 or more items.
   - Individual transactions do not have either `name` or `numItems` properties, we'll have to add them to the output.
 */
-// const bigSpenders;
+const bigSpenders = []; 
+saleSpenders = transactions.filter(transaction => transaction.type == 'sale')
+customers = saleSpenders.filter(transaction => {
+  if (transaction.customer != null){ 
+    if (transaction.items.length >= 5){ 
+      bigSpender = {'Customer Name': transaction.customer, 'numItems': transaction.items.length}
+      bigSpenders.push(bigSpender); 
+    } 
+  }
+ })
 
-// console.log( 'The "big spenders" are:', bigSpenders );
+console.log( 'The "big spenders" are:', bigSpenders );
 
 
 // --------------------------------------------------
@@ -258,9 +267,17 @@ console.log( 'The vendors are:', allVendors );
   HINT(S):
   - Transactions don't have 'prices', but their 'items' do!
 // */
-// const sumFirstSale;
+const add = (total, num) => { 
+  return total += num; 
+}
+let sumFirstSale = []
+saleSpenders.filter(item => {
+  sumFirstSale.push(item.items[0].price)
+})
+sumFirstSale = sumFirstSale.reduce(add)
+// console.log(sumFirstSale.reduce(add))
 
-// console.log( 'The sum of the first sale items is:', sumFirstSale );
+console.log( 'The sum of the first sale items is:', sumFirstSale );
 
 
 // // --------------------------------------------------
